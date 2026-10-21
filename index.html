@@ -104,13 +104,13 @@ textarea.big{width:100%;border:0;border-radius:16px;padding:14px;background:#fff
 .help code{background:var(--soft);padding:1px 6px;border-radius:6px;color:var(--ink)}
 .warn{background:var(--acc-soft);color:var(--acc);border-radius:14px;padding:10px 14px;margin-top:14px}
 
-/* ── док ── */
-.dock{position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(380px,calc(100% - 28px));z-index:30;padding:6px;border-radius:32px;background:rgba(255,255,255,.78);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);border:1px solid rgba(22,22,26,.08);box-shadow:0 12px 32px rgba(22,22,26,.16),0 2px 6px rgba(22,22,26,.06);transform:translateX(-50%);transition:transform .45s cubic-bezier(.3,.9,.3,1);animation:dockin .8s .3s cubic-bezier(.2,.9,.3,1.15) backwards}
-.dock.hide{transform:translate(-50%,150%)}
+/* ── плаваюча glass-dock панель у стилі «Погреба» ── */
+.dock{position:fixed;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));width:min(380px,calc(100% - 28px));z-index:30;padding:6px;border-radius:32px;background:rgba(255,255,255,.78);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);border:1px solid rgba(22,22,26,.08);box-shadow:0 12px 32px rgba(22,22,26,.16),0 2px 6px rgba(22,22,26,.06);transform:translateX(-50%);transition:transform .45s cubic-bezier(.3,.9,.3,1);animation:dockin .8s .5s cubic-bezier(.2,.9,.3,1.15) backwards}
+.dock.hide{transform:translate(-50%,150%);pointer-events:none}
 @keyframes dockin{from{transform:translate(-50%,160%);opacity:0}}
-.dk{position:relative;display:grid;grid-template-columns:repeat(3,1fr)}
+.dk{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
 .dk i{position:absolute;top:0;bottom:0;left:0;width:33.3334%;background:var(--ink);border-radius:26px;transition:transform .55s cubic-bezier(.34,1.5,.5,1);box-shadow:0 4px 14px rgba(22,22,26,.3)}
-.dk button{position:relative;z-index:1;display:grid;justify-items:center;gap:2px;padding:9px 0 7px;color:var(--mute);background:none;border:0;font-size:11px;font-weight:500;transition:color .3s}
+.dk button{position:relative;z-index:1;display:grid;justify-items:center;gap:2px;min-width:0;padding:9px 0 7px;color:var(--mute);background:none;border:0;font-size:11px;font-weight:500;transition:color .3s,padding .5s cubic-bezier(.34,1.35,.5,1),opacity .3s;-webkit-tap-highlight-color:transparent}
 .dk button.on{color:#fff}
 .dk button:active svg{transform:scale(.88)}
 .dk svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
@@ -166,7 +166,7 @@ header.scrolled{box-shadow:0 6px 24px rgba(22,22,26,.07)}
 .rip{position:absolute;border-radius:50%;background:currentColor;opacity:.18;transform:scale(0);animation:rip .6s ease-out forwards;pointer-events:none}
 @keyframes rip{to{transform:scale(1);opacity:0}}
 .soft{transition:box-shadow .3s}
-/* ── анімації доку ── */
+/* ── пружні dock-анімації ── */
 .dk i{animation:breathe 3.2s ease-in-out infinite}
 @keyframes breathe{50%{box-shadow:0 6px 24px rgba(22,22,26,.42)}}
 .dk i.jelly{animation:jelly .6s cubic-bezier(.3,1.4,.5,1),breathe 3.2s .6s ease-in-out infinite}
@@ -178,7 +178,7 @@ header.scrolled{box-shadow:0 6px 24px rgba(22,22,26,.07)}
 .dk button:nth-of-type(2){animation-delay:.85s}
 .dk button:nth-of-type(3){animation-delay:.95s}
 @keyframes dkbtn{from{opacity:0;transform:translateY(14px) scale(.7)}}
-.dk span{display:block;opacity:.8;transform:translateY(1px);transition:opacity .3s,transform .4s cubic-bezier(.3,1.5,.5,1)}
+.dk span{display:block;opacity:.8;transform:translateY(1px);transition:opacity .3s,transform .4s cubic-bezier(.3,1.5,.5,1),max-height .45s cubic-bezier(.3,1.2,.5,1)}
 .dk button.on span{opacity:1;transform:translateY(-1px)}
 .dk svg.pop path{stroke-dasharray:40;animation:draw .65s .05s ease-out backwards}
 @keyframes draw{from{stroke-dashoffset:40}to{stroke-dashoffset:0}}
@@ -187,27 +187,14 @@ header.scrolled{box-shadow:0 6px 24px rgba(22,22,26,.07)}
 .pill{font-size:16px}
 .note{display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--soft);border:1px dashed var(--ink);border-radius:16px;padding:12px 14px;margin:0 0 16px;animation:vin .5s ease both}
 .note[hidden]{display:none}
-/* ── згортання / розгортання доку ── */
-.dock{transition:transform .45s cubic-bezier(.3,.9,.3,1),width .6s cubic-bezier(.34,1.35,.5,1)}
-.dk{grid-template-columns:1fr 1fr 1fr;transition:grid-template-columns .6s cubic-bezier(.34,1.35,.5,1)}
-.dk i{transition:transform .55s cubic-bezier(.34,1.5,.5,1),width .6s cubic-bezier(.34,1.35,.5,1)}
-.dk button{min-width:0;overflow:hidden;transition:color .3s,padding .5s cubic-bezier(.34,1.35,.5,1),opacity .3s}
-.dk span{max-height:20px;transition:opacity .25s,max-height .45s cubic-bezier(.3,1.2,.5,1),transform .4s cubic-bezier(.3,1.5,.5,1)}
-.dock.mini{width:66px;cursor:pointer}
-.dock.mini .dk i{width:100%;transform:translateX(0)!important}
-.dock.mini[data-i="0"] .dk{grid-template-columns:1fr 0fr 0fr}
-.dock.mini[data-i="1"] .dk{grid-template-columns:0fr 1fr 0fr}
-.dock.mini[data-i="2"] .dk{grid-template-columns:0fr 0fr 1fr}
-.dock.mini .dk button{padding:14px 0}
-.dock.mini .dk button:not(.on){opacity:0;pointer-events:none}
-.dock.mini .dk span{opacity:0;max-height:0}
-.dock.mini .dk b{left:auto;right:4px;top:2px}
 @media (display-mode: standalone){
   html,body{overscroll-behavior:none}
   body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
   input,textarea{-webkit-user-select:text;user-select:text}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+
 </style>
 </head>
 <body>
@@ -576,7 +563,7 @@ function setBadge(){
   const n = String(Object.keys(S.absences[curDay] || {}).length), b = $("dcnt");
   b.textContent = n; b.hidden = n === "0";
   if (n !== lastBadge){
-    $("dock").classList.remove("hide"); setMini(false); lockUntil = Date.now() + 900;
+    $("dock").classList.remove("hide"); lockUntil = Date.now() + 900;
     if (n !== "0"){ b.classList.remove("pop"); void b.offsetWidth; b.classList.add("pop"); }
   }
   lastBadge = n;
@@ -689,7 +676,7 @@ function renderSettings(){
 // ───────────────────────── дії ─────────────────────────
 function markDay(){ S.checked[curDay] = true; }
 const handlers = {
-  tab: t => { if ($("dock").classList.contains("mini")){ setMini(false); lockUntil = Date.now() + 900; return; } setView(t.dataset.tab); },
+  tab: t => { lockUntil = Date.now() + 900; $("dock").classList.remove("hide"); setView(t.dataset.tab); },
   prevDay: () => { curDay = ymd(addDays(fromYmd(curDay), -1)); pending = []; stagger = true; render(); },
   nextDay: () => { curDay = ymd(addDays(fromYmd(curDay), 1)); pending = []; stagger = true; render(); },
   today: () => { curDay = ymd(new Date()); pending = []; stagger = true; render(); },
@@ -780,20 +767,16 @@ $("restoreFile").addEventListener("change", async e => {
   } catch (err){ toast("Це не схоже на файл-копію"); }
 });
 
-function setMini(on){
-  const d = $("dock");
-  if (d.classList.contains("mini") === on) return;
-  d.classList.toggle("mini", on);
-  const dk = d.querySelector(".dk"); dk.classList.remove("bump"); void dk.offsetWidth; dk.classList.add("bump");
-}
-// док згортається при прокрутці вниз, розгортається вгору або тапом; ховається при клавіатурі
+// Панель плавно ховається вниз під час прокручування сторінки вниз
+// і повертається, щойно користувач прокручує вгору.
 const dock = $("dock");
 let lastY = 0;
 addEventListener("scroll", () => {
   const y = scrollY, dY = y - lastY;
   if (Math.abs(dY) < 8 || Date.now() < lockUntil) return;
   lastY = y;
-  setMini(dY > 0 && y > 120 && innerHeight + y < document.body.scrollHeight - 40);
+  const hide = dY > 0 && y > 120 && innerHeight + y < document.body.scrollHeight - 40;
+  dock.classList.toggle("hide", hide);
 }, {passive: true});
 addEventListener("focusin", e => { if (e.target.matches("input:not([type=checkbox]):not([type=radio]),textarea")) dock.classList.add("hide"); });
 addEventListener("focusout", () => dock.classList.remove("hide"));
