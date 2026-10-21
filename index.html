@@ -192,6 +192,11 @@ header.scrolled{box-shadow:0 6px 24px rgba(22,22,26,.07)}
   body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
   input,textarea{-webkit-user-select:text;user-select:text}
 }
+/* Фікс dock на мобільних: підняти над системною навігацією та обрізати
+   лише внутрішній вміст індикатора, щоб він не виходив за скляну капсулу. */
+.dock{bottom:max(22px,calc(12px + env(safe-area-inset-bottom,0px)));overflow:hidden}
+.dk{overflow:hidden;border-radius:26px}
+.dk i{top:0;bottom:0;max-height:100%;}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 
